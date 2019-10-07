@@ -11,13 +11,20 @@ class App extends Component {
     filteredFoods : foods,
     todaysFood : []
   }
-  addFoodHandler = (newFood) => {
-    let foodCopy = [ ...this.state.allFoods ];
-    foodCopy.push(newFood);
+
+  addFood = (name, calories, image) => {
+    let newFood = {
+      name: name,
+      calories: calories,
+      image: image,
+    }
+    let newList = this.state.foodList.slice()
+    newList.unshift(newFood)
     this.setState({
-      allFoods : foodCopy
+      foodList: newList
     })
   }
+
   searchFoods = (e) => {
     let search = e.target.value
     
@@ -29,9 +36,7 @@ class App extends Component {
     });    
   };
   
-  addTodayHandler = (food) => {
-    console.log(food.foodName, food, this)
-    
+  addTodayHandler = (food) => {    
     let todaysName = food.foodName
     this.state.todaysFood.push(food)
     this.setState({
@@ -39,7 +44,7 @@ class App extends Component {
     })
     console.log(this.state.todaysFood)
   }
-  //
+  
   render() {
     const getAllFoods = this.state.filteredFoods.map((eachFood,i) =>{
         return <Foodbox key={i} addToToday={this.addTodayHandler} foodName={eachFood.name} calories={eachFood.calories} image={eachFood.image}/>
@@ -59,7 +64,7 @@ class App extends Component {
             {getAllFoods}
           </div>
           <div className='column is-quarter'>
-            <p> Today's List </p>
+            <p><b> Today's List: </b></p>
             <ul>
               <li>{this.state.todaysFood}</li>
             </ul>
@@ -67,6 +72,16 @@ class App extends Component {
           <div className='column is-quarter'>
             <AddFood addFood={this.addFoodHandler}/>
           </div>
+        </div>
+
+        <div>
+        <button onClick={this.showForm} className="button is-primary">Add new food</button>
+        <div className = "form">
+          {this.state.displayForm ? <div className="control"><input className="input" value={this.state.foodName} onChange={(e) =>this.newFoodHandler(e)}  type="text" name = "name" placeholder="Name" /></div> : <br />}
+          {this.state.displayForm ? <div className="control"><input className="input" value={this.state.foodCalories} onChange={(e) =>this.newFoodHandler(e)}  type="text" name="calories" placeholder="Calories" /></div> : <br />}
+          {this.state.displayForm ? <div className="control"><input className="input" value={this.state.foodImage} onChange={(e) =>this.newFoodHandler(e)}  type="text" name= "image" placeholder="Image url" /></div> : <br />}
+          {this.state.displayForm ? <button onClick={()=>this.addFood(...this.state.newFood)} className="button is-primary">Upload food data</button> : <br/>}
+        </div>
         </div>
         
       </div>
