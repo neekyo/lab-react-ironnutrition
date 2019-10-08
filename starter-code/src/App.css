@@ -57,3 +57,12 @@
   margin-left: 20px;
   font-size: 30px;
 }
+
+.button.is-primary {
+  background-color: #209CED;
+}
+
+.button.is-primary:hover {
+  background-color: #209CED;
+}
+
