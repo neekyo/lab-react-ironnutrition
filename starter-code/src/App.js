@@ -18,7 +18,7 @@ class App extends Component {
       calories: calories,
       image: image,
     }
-    let newList = this.state.foodList.slice()
+    let newList =   this.state.foodList.slice()
     newList.unshift(newFood)
     this.setState({
       foodList: newList
@@ -51,20 +51,23 @@ class App extends Component {
       })
     return (
       <div className="App">
+        <p className="theTitle"> IronNutrition </p>
         <form >
           <input
-            onChange={this.searchFoods}
-            placeholder="Search"
+            onChange={this.searchFoods} 
+            placeholder="  Search"
             id="search"
             type="text"
+            className='search'
           />
         </form>
         <div className='columns'>
-          <div className='column is-half'>
+          <div className='column is-half allFoods'>
             {getAllFoods}
           </div>
           <div className='column is-quarter'>
-            <p><b> Today's List: </b></p>
+            <p className='title'> Today's Foods </p>
+            <p>Total: </p>
             <ul>
               <li>{this.state.todaysFood}</li>
             </ul>
